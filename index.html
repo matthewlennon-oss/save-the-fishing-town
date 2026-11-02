@@ -30,6 +30,8 @@
     @media(max-width:680px){.questions{grid-template-columns:1fr}.fishchart{padding:17px}.chartframe{height:150px}.brand{font-size:.78rem;letter-spacing:-.025em;gap:8px}.brandicon{width:32px;height:32px;flex-shrink:0}.navchip{padding:7px 9px}.topright{gap:4px}}
     @media print{.fishchart,.questions{break-inside:avoid}.chartframe{height:130px}.questions{display:block}.questions .panel{margin-bottom:10px}.bar-over{overflow:visible}}
 
+
+    .resource-card{background:#eff7f5;border:1px solid #cfebe5;border-radius:13px;padding:16px 17px;margin:14px 0}.resource-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}.resource-top strong{font-size:.91rem}.resource-top span{font-size:.93rem;font-weight:850}.resource-track{display:flex;height:11px;border-radius:10px;background:#d7e7e9;overflow:hidden;margin:10px 0}.resource-track span{height:100%;background:#168d83;display:block;transition:width .15s}.resource-track span:last-child{background:#d5e5e4}.resource-card p{font-size:.81rem;line-height:1.5;color:#5b777b;margin:0}.resource-card.warning{background:#fff2e9;border-color:#e8c3a6}.resource-card.warning p{color:#895532}
   </style>
 </head>
 <body>
@@ -70,7 +72,8 @@
           <p>How much commercial fishing activity should be permitted in waters that remain open?</p>
           <input id="fishing" aria-label="Permitted commercial fishing intensity" type="range" min="0" max="100" step="5" value="65"><div class="endpoints"><span>0% · No fishing</span><span>100% · High fishing effort</span></div>
         </div>
-        <p class="underlever"><strong>Important:</strong> Marine protection is the share of waters closed to fishing. Support and fishing intensity are levels of policy effort; they do <em>not</em> add up to 100%. Protecting all waters means no catch, regardless of the fishing intensity setting.</p>
+        <div class="resource-card" id="accessCard" aria-live="polite"><div class="resource-top"><strong>🌊 Available fishing waters</strong><span id="openWaterValue">65% open</span></div><div class="resource-track" aria-hidden="true"><span id="protectedFill" style="width:35%"></span><span id="openFill" style="width:65%"></span></div><p id="fishingNote">Fishing activity is possible only in waters left open; protecting all waters removes the commercial fishery.</p></div>
+        <p class="underlever"><strong>Important:</strong> These are different decisions, not three percentages of one budget. Fishing intensity applies only to <em>waters still open</em>. Retraining helps families but costs money, and its benefits eventually level off.</p>
       </div>
       <aside class="panel" aria-label="Town targets">
         <div class="brief-header"><h2 style="margin-bottom:8px">Town success targets</h2><span aria-hidden="true">🎯</span></div>
@@ -89,6 +92,7 @@
     <footer class="foot"><div class="footer-line"><span>SAVE THE FISHING TOWN · Year 9 Sustainability</span><span>No login, tracking or student accounts. Can run offline.</span></div>
       <details><summary>How does the classroom model work?</summary>
         <p>Each plan starts with a fictional fish population index of <strong>42/100</strong>. The model projects five years. Protected waters reduce the area available to fishing, supporting fish recovery but reducing fishing access. Fishing intensity increases fishing activity in open waters and can support current jobs and income, but excessive fishing pressure reduces fish stocks. Community support helps families move into new jobs and diversifies the economy, but has a short-term cost.</p>
+        <p>This revision deliberately makes maximising all three levers a poor strategy: 100% protection leaves no legal fishing grounds, 100% community support is expensive and provides diminishing additional benefit, and 100% fishing intensity increases pressure only on whatever area remains open. Some intermediate strategies can reach all four targets.</p>
         <p>The four output scores are <em>invented educational indices</em>, not measured fish numbers, employment rates, dollar amounts, or predictions. The model is deliberately deterministic: identical choices produce identical results. The threshold values are learning targets, not real management standards. Actual fisheries depend on species, reproduction, habitat, climate, illegal fishing, regulation, tourism, markets and much more. Marine reserves can help fisheries in some circumstances, but outcomes vary; neither fishing bans nor greater catches are guaranteed to achieve the modelled benefits.</p>
       </details>
       <p><a class="downloadlink" href="student-worksheet.html">Open the companion student worksheet</a> (when hosted alongside this game).</p>
@@ -111,8 +115,17 @@
   let round=1,first=null,second=null,simulating=false;
   const clamp=(v,a=0,b=100)=>Math.max(a,Math.min(b,v));
   const readChoices=()=>Object.fromEntries(keys.map(k=>[k,Number($(k).value)]));
-  function paintSlider(k){const el=$(k);$(k+'Value').textContent=el.value+'%';el.parentElement.style.setProperty('--percent',el.value+'%');}
-  function setChoices(c){keys.forEach(k=>{$(k).value=c[k];paintSlider(k);});}
+  function refreshAccess(){
+    const c=readChoices(),open=100-c.protection,actual=c.fishing*open/100;
+    $('openWaterValue').textContent=`${open}% open · ${c.protection}% protected`;
+    $('protectedFill').style.width=c.protection+'%';$('openFill').style.width=open+'%';
+    $('accessCard').classList.toggle('warning',open===0);
+    $('fishingNote').textContent=open===0
+      ? 'There are no legal fishing waters left. Even at 100% fishing intensity, commercial fishing activity and future catches cannot continue.'
+      : `${c.fishing}% fishing intensity across the ${open}% open waters means ${actual.toFixed(1)}% of the maximum potential fishing activity. Higher fishing pressure can harm fish recovery.`;
+  }
+  function paintSlider(k){const el=$(k);$(k+'Value').textContent=el.value+'%';el.parentElement.style.setProperty('--percent',el.value+'%');refreshAccess();}
+  function setChoices(c){keys.forEach(k=>{$(k).value=c[k];paintSlider(k);});refreshAccess();}
   keys.forEach(k=>{$(k).addEventListener('input',()=>paintSlider(k));paintSlider(k);});
 
   // Deliberately simplified teaching model, not calibrated to a real fishery.
@@ -130,12 +143,20 @@
     }
     const scores={
       fish:Math.round(stock),
-      jobs:Math.round(clamp(48+.38*openWaterFishing+.35*s+.15*(stock-42)-.12*p*(1-s/100)-.24*Math.max(0,50-stock))),
-      economy:Math.round(clamp(55+.48*openWaterFishing+.54*(stock-42)-.15*s+.15*p*(s/100)-.32*Math.max(0,50-stock))),
+      // Livelihood support helps families adapt, but its benefits level off at high spending.
+      jobs:Math.round(clamp(45+.43*openWaterFishing+.31*Math.min(s,75)+.05*Math.max(0,s-75)+.15*(stock-42)-.08*p*(1-s/100)-.24*Math.max(0,50-stock))),
+      // The local economy depends on an active fishery and can be strained by
+      // large-scale protection enforcement and expensive transition programmes.
+      economy:Math.round(clamp(62+.49*openWaterFishing+.52*(stock-42)-.17*s-.04*p+.14*p*s/100-.50*Math.max(0,p-70)-.40*Math.max(0,s-75)-.32*Math.max(0,50-stock))),
+      // Even healthy fish stocks do not create catches if there is no open fishery.
       catch:Math.round(clamp(30+.70*openWaterFishing+.42*(stock-42)*Math.min(1,openWaterFishing/15)-1.2*Math.max(0,50-stock)))
     };
     const hits=metrics.filter(m=>scores[m.key]>=targets[m.key]).length;
     return {choices:{...c},history,scores,hits,success:hits===4,openWaterFishing};
+  }
+  function accessHtml(result){
+    const c=result.choices,open=100-c.protection,activity=result.openWaterFishing;
+    return `<div class="resource-card ${open===0?'warning':''}"><div class="resource-top"><strong>🌊 Fishing access</strong><span>${open}% waters open</span></div><div class="resource-track" aria-hidden="true"><span style="width:${c.protection}%"></span><span style="width:${open}%"></span></div><p>Fishing intensity was ${c.fishing}% in the ${open}% of waters left open. That is ${activity.toFixed(1)}% of maximum potential fishing activity.${open===0?' The fish population can recover, but the town has no commercial fishing grounds or future catch.':''}</p></div>`;
   }
   function setProgress(stage){['step1','step2','step3'].forEach((id,i)=>{const el=$(id);el.classList.remove('active','done');if(i<stage)el.classList.add('done');if(i===stage)el.classList.add('active');});}
   const displayValue=(m,v)=>v+'/100';
@@ -153,16 +174,17 @@
       ? `After five fictional years, the fish population reaches ${s.fish}/100. Marine protection and limits on fishing pressure help more fish survive and reproduce.`
       : `The fish population reaches ${s.fish}/100, below the recovery target. Fish may need less pressure from fishing or more habitat protection.`;
     const society=s.jobs>=72
-      ? `Local livelihoods reach ${s.jobs}/100. Fishing activity can support jobs, while retraining and other work help families adapt to changes.`
-      : `Local livelihoods are at ${s.jobs}/100. Families may need more job pathways or a slower transition away from fishing in protected waters.`;
+      ? `Local livelihoods reach ${s.jobs}/100. Fishing supports some jobs, and retraining creates other pathways. However, increasing support beyond 75% yields fewer additional benefits.`
+      : `Local livelihoods are at ${s.jobs}/100. Fishing families may need more job pathways, or the remaining fishing grounds may need to support a viable level of activity.`;
     const economy=s.economy>=70
-      ? `Town economic health is ${s.economy}/100. Fishing income and alternative activities help balance the cost of transition support.`
-      : `Town economic health is ${s.economy}/100. Too little fishing income or high transition costs may strain businesses and the local budget.`;
+      ? `Town economic health is ${s.economy}/100. Fishing income and alternative work offset some of the costs of protected areas and retraining programmes.`
+      : `Town economic health is ${s.economy}/100. Less access to fishing reduces income, while very high marine protection and community support both require resources. More of each is not automatically better.`;
     const future=s.catch<53 ? 'However, the projected future catch is below target.' : 'The projected future catch also meets its target.';
     return `<div class="insights"><article class="insight"><div class="insight-label env">01 · Environmental</div><h3>Fish and habitats</h3><p>${ecosystem}</p></article><article class="insight"><div class="insight-label soc">02 · Social</div><h3>Families and work</h3><p>${society}</p></article><article class="insight"><div class="insight-label eco">03 · Economic</div><h3>Income now and later</h3><p>${economy} ${future}</p></article></div>`;
   }
   function summary(result){const s=result.scores;
     if(result.success)return ['A balanced coastal future!','You met all four targets in this fictional model. Your plan combines recovering fish populations with secure livelihoods and an economically useful fishery.'];
+    if(result.choices.protection===100)return ['Fish protected, but the fishery has closed.','With all fishing waters protected, the town has no commercial catch. Retraining may help families, but it cannot replace every source of income without cost.'];
     if(s.fish<targets.fish)return ['The fish need more time to recover.','Jobs and catches may look strong today, but the fish stock is below the recovery target. Consider reducing fishing pressure or increasing protection.'];
     if(s.jobs<targets.jobs)return ['Marine recovery, but families need support.','Your environmental goals may be on track, but too many people could struggle to make a living. Think about retraining and alternative jobs.'];
     if(s.economy<targets.economy)return ['The transition needs a stronger economy.','You may protect nature and support families, but the fictional town still needs sufficient income to maintain services and businesses.'];
@@ -190,14 +212,14 @@
   function roundHtml(result){const [head,desc]=summary(result);
     return `<div class="heading-row"><div><div class="eyebrow card-eyebrow">Round 1 · Your first outcome</div><h2 style="margin:7px 0 3px">Five years after your plan…</h2><p>Study the outcomes before designing your second and final approach.</p></div></div>
       <div class="resultlead"><div><div class="smalltag">First assessment</div><h2>${head}</h2><p>${desc}</p></div><div class="resultcount"><strong>${result.hits}/4</strong><span>TARGETS MET</span></div></div>
-      <div class="metrics">${metricHtml(result)}</div>${stockChart(result,null)}${insights(result)}
+      <div class="metrics">${metricHtml(result)}</div>${accessHtml(result)}${stockChart(result,null)}${insights(result)}
       <div class="reflection"><h3>Pause and think</h3><p>Which outcome is furthest from its target? Before changing the levers, predict how your new choice could help <em>one</em> pillar while affecting another.</p><button type="button" class="cta" id="nextRound">Improve your strategy for Round 2 <span aria-hidden="true">→</span></button></div>`;
   }
   function finalHtml(one,two){const [head,desc]=summary(two),difference=two.hits-one.hits;
     const status=two.success?'Mission achieved':difference>0?'Improvement made':difference<0?'More targets missed':'Trade-offs revealed';
     return `<div class="heading-row"><div><div class="eyebrow card-eyebrow">Final report · Two rounds completed</div><h2 style="margin:7px 0 3px">Your sustainability outcome</h2><p>Compare two possible five-year futures from the same starting conditions.</p></div></div>
       <div class="resultlead"><div><div class="smalltag">${status}</div><h2>${head}</h2><p>${desc}</p></div><div class="resultcount"><strong>${two.hits}/4</strong><span>TARGETS MET</span></div></div>
-      <div class="metrics">${metricHtml(two)}</div>${stockChart(one,two)}
+      <div class="metrics">${metricHtml(two)}</div>${accessHtml(two)}${stockChart(one,two)}
       <div class="panel" style="margin:18px 0"><h2>What changed?</h2><p class="sub" style="margin-bottom:14px">${chooseMessage(one,two)}</p>${compareTable(one,two)}</div>
       ${insights(two)}
       <div class="panel" style="margin:16px 0"><h2>Your decisions</h2><p class="sub" style="margin-bottom:14px">Your two sets of lever settings</p>${choicesTable(one,two)}</div>

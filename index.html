@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#103a4b">
+  <meta name="description" content="Save the Fishing Town: a two-round sustainability decision game for Year 9 Science.">
+  <title>Save the Fishing Town | Year 9 Sustainability Challenge</title>
+  <style>
+
+    :root{--ink:#163541;--muted:#627580;--line:#dfe7e8;--bg:#f5f8f7;--white:#fff;--navy:#103a4b;--green:#178c86;--green-pale:#e1f5f1;--blue:#2d90b5;--blue-pale:#e8f3fb;--gold:#c48a34;--gold-pale:#fbf1df;--red:#ac563f;--red-pale:#fcece7;--shadow:0 20px 55px rgba(17,57,72,.065);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);color-scheme:light}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);min-width:320px}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #80c8e9;outline-offset:3px}.hidden{display:none!important}
+    .shell{max-width:1160px;margin:0 auto;padding:0 26px}.topbar{background:#fff;border-bottom:1px solid var(--line)}.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.03em}.brandicon{height:39px;width:39px;background:var(--navy);border-radius:11px;display:grid;place-items:center;color:#fff}.brandicon svg{width:23px;height:23px}.topright{display:flex;align-items:center;gap:12px}.smalltag{font-size:.73rem;letter-spacing:.12em;font-weight:800;text-transform:uppercase;color:#55717b}.navchip{padding:8px 11px;background:#edf4f3;border:1px solid #d8e9e6;border-radius:99px;font-size:.78rem;font-weight:750;color:#2a605c}.hero{padding:44px 0 27px}.eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--green)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(2.7rem,5.2vw,4.45rem);line-height:1.04;letter-spacing:-.06em;margin:11px 0 14px}h2{font-size:1.55rem;letter-spacing:-.04em;line-height:1.2}h3{font-size:1.08rem;letter-spacing:-.02em}.intro{max-width:660px;color:var(--muted);font-size:1.07rem;line-height:1.62;margin-bottom:0}
+    .steps{margin:26px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 16px;display:flex;gap:10px;align-items:center;color:#819199;font-weight:750;font-size:.88rem}.stepnum{border:1px solid #dbe5e7;color:inherit;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;font-size:.78rem}.step.active{border-color:#91c4ba;background:#e8f6f0;color:#176852}.step.active .stepnum{background:#176852;color:#fff;border-color:#176852}.step.done{color:#497a70}.step.done .stepnum{background:#e6f5ef;color:#20785d;border-color:#c4e5d9}
+    .scenario{background:var(--navy);border-radius:20px;position:relative;overflow:hidden;color:#fff;padding:25px 30px;display:flex;justify-content:space-between;gap:25px;align-items:center;box-shadow:var(--shadow)}.scenario:after{content:"";position:absolute;width:390px;height:390px;border:1px solid rgba(255,255,255,.10);border-radius:50%;right:-150px;top:-180px;box-shadow:0 0 0 55px rgba(255,255,255,.035),0 0 0 125px rgba(255,255,255,.025);pointer-events:none}.scenario .smalltag{color:#9ed9c1}.scenario h2{margin:7px 0 8px;font-size:1.35rem}.scenario p{max-width:650px;margin:0;color:#d3e3e7;line-height:1.55;font-size:.91rem}.scenariofacts{display:flex;flex-wrap:wrap;gap:9px;align-items:center;min-width:210px;position:relative;z-index:1}.fact{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.14);padding:9px 12px;border-radius:10px;font-size:.77rem;white-space:nowrap;font-weight:750}
+    .game-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);gap:22px;margin:23px 0 24px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:19px;padding:26px;box-shadow:var(--shadow)}.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}.panelhead h2{margin:0 0 7px}.sub{color:var(--muted);font-size:.9rem;line-height:1.5;margin:0}.roundpill{white-space:nowrap;background:#e9f2f4;color:#275a6b;padding:8px 10px;border-radius:20px;font-size:.72rem;font-weight:900}
+    .lever{border:1px solid var(--line);border-radius:14px;padding:20px 18px 16px;margin:0 0 13px;--accent:var(--green);--pale:var(--green-pale)}.lever.social{--accent:var(--blue);--pale:var(--blue-pale)}.lever.economy{--accent:var(--gold);--pale:var(--gold-pale)}.lever-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.levername{font-weight:850;font-size:.98rem;display:flex;align-items:center;gap:9px}.levericon{background:var(--pale);color:var(--accent);font-size:.95rem;width:31px;height:31px;border-radius:9px;display:grid;place-items:center}.levervalue{font-size:1.45rem;color:var(--accent);letter-spacing:-.04em;font-weight:900;font-variant-numeric:tabular-nums}.lever p{font-size:.84rem;line-height:1.45;color:var(--muted);margin:7px 0 16px}.lever input[type=range]{width:100%;appearance:none;-webkit-appearance:none;cursor:pointer;height:9px;border-radius:8px;background:linear-gradient(to right,var(--accent) var(--percent),#e3eaeb var(--percent));outline-offset:7px}.lever input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:23px;height:23px;background:#fff;border:5px solid var(--accent);border-radius:50%;box-shadow:0 2px 8px #0002}.lever input[type=range]::-moz-range-thumb{width:15px;height:15px;background:#fff;border:5px solid var(--accent);border-radius:50%}.endpoints{display:flex;justify-content:space-between;margin-top:12px;font-size:.72rem;color:#82939b}.underlever{font-size:.78rem;line-height:1.5;color:#657781;margin:2px 0 0}
+    .brief-header{display:flex;justify-content:space-between;align-items:center}.goalnote{font-size:.84rem;color:var(--muted);line-height:1.55}.target{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}.target:first-of-type{margin-top:4px}.targetname{font-weight:800;font-size:.89rem}.targetdesc{font-size:.78rem;color:var(--muted);margin-top:4px}.threshold{font-weight:900;text-align:right;white-space:nowrap;font-size:1rem}.targetkey{font-size:.74rem;color:var(--muted);margin-top:3px;text-align:right}.notice{display:flex;gap:10px;background:#f0f5f6;border-radius:12px;padding:13px;font-size:.8rem;color:#49656f;line-height:1.5;margin:18px 0}.notice strong{color:var(--ink)}.notice-icon{color:#2d7e91;font-size:1.08rem}.cta{width:100%;border:0;border-radius:13px;padding:16px 18px;background:var(--navy);color:#fff;font-weight:850;display:flex;justify-content:center;gap:10px;align-items:center;min-height:54px;transition:transform .15s,background .15s}.cta:hover{background:#1c5261;transform:translateY(-1px)}.cta.secondary{background:#e7f2ee;color:#236852}.cta.secondary:hover{background:#d5ece1}.tiny{font-size:.77rem;color:#7b8d94;text-align:center;margin:12px 0 0;line-height:1.5}
+    .feedback{margin:0 0 25px;scroll-margin-top:25px}.heading-row{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin:0 0 16px}.heading-row p{margin:4px 0 0;color:var(--muted);line-height:1.5}.eyebrow.card-eyebrow{color:#2f8c71;font-size:.75rem}.resultlead{border-radius:19px;background:linear-gradient(120deg,#e9f5f0,#f2f8fa);border:1px solid #d7e8e0;padding:23px 25px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:16px}.resultlead h2{font-size:1.5rem;margin:7px 0}.resultlead p{font-size:.91rem;margin:0;color:#526f72;line-height:1.5;max-width:720px}.resultcount{background:#fff;padding:12px;border-radius:13px;min-width:99px;text-align:center;border:1px solid #d6e7e2}.resultcount strong{display:block;font-size:1.6rem;letter-spacing:-.045em}.resultcount span{font-size:.72rem;font-weight:800;color:#61767b}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:16px 0}.metric{background:#fff;border:1px solid var(--line);padding:17px 15px;border-radius:14px}.metric-label{font-size:.76rem;color:#69808b;font-weight:800}.metric-number{font-size:1.9rem;letter-spacing:-.05em;font-weight:900;margin:8px 0 7px;font-variant-numeric:tabular-nums}.metric-status{font-size:.76rem;font-weight:850;display:flex;gap:5px;align-items:center}.passed{color:#238064}.missed{color:#b16b35}.metricbar{height:7px;background:#e5eced;border-radius:5px;overflow:hidden;margin-top:13px}.metricbar>span{display:block;height:100%;border-radius:5px;background:#399c82}.metricbar>span.fail{background:#dba04b}
+    .insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:15px 0 19px}.insight{background:#fff;border:1px solid var(--line);border-radius:14px;padding:19px}.insight h3{font-size:.95rem;margin-bottom:9px}.insight p{font-size:.84rem;color:#56717a;line-height:1.55;margin:0}.insight-label{font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}.insight-label.env{color:var(--green)}.insight-label.soc{color:var(--blue)}.insight-label.eco{color:#aa7c32}.reflection{background:#fff;border:1px solid var(--line);border-radius:17px;padding:23px;margin:17px 0}.reflection h3{margin-bottom:6px}.reflection p{font-size:.88rem;color:var(--muted);line-height:1.5;margin-bottom:15px}.compare{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:15px;overflow:hidden}.compare th{text-align:left;color:#53727d;background:#edf3f3;font-size:.76rem;letter-spacing:.03em}.compare th,.compare td{padding:13px 15px;border-bottom:1px solid #e6edee}.compare tr:last-child td{border-bottom:0}.compare td:not(:first-child),.compare th:not(:first-child){text-align:center;font-variant-numeric:tabular-nums}.delta-up{color:#218267;font-weight:800}.delta-down{color:#ba6b37;font-weight:800}.delta-even{color:#7b8b92}.bottom-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:20px 0 5px}.bottom-actions .cta{width:auto;min-width:210px}.textbtn{background:transparent;color:#52707c;border:1px solid #ccd9dc;border-radius:12px;padding:12px 17px;font-weight:800}.textbtn:hover{background:#eaf2f3}
+    .writearea{display:block;width:100%;min-height:93px;border:1px solid #cddbdd;border-radius:11px;padding:13px;resize:vertical;color:var(--ink);font-size:.9rem;line-height:1.5}.label{display:block;font-weight:800;font-size:.91rem;margin-bottom:10px}.foot{padding:6px 0 40px;color:#6e858d;font-size:.79rem;line-height:1.6}.foot details{border-top:1px solid #dfe8e9;padding:16px 0;margin:12px 0 0}.foot summary{cursor:pointer;font-weight:800;color:#385d6b}.foot li{margin:6px 0}.footer-line{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.loadingmask{position:fixed;inset:0;background:rgba(9,35,43,.78);z-index:10;display:grid;place-items:center;padding:25px}.loadbox{background:#fff;width:min(480px,100%);border-radius:22px;padding:40px 34px;text-align:center;box-shadow:0 24px 70px #0002}.spinner{height:60px;width:60px;border-radius:50%;border:6px solid #dceee6;border-top-color:#299575;margin:0 auto 24px;animation:spin 1s linear infinite}.loadbox h2{font-size:1.6rem}.loadbox p{color:var(--muted);line-height:1.5;margin:0}.loadbar{height:7px;background:#e3edeb;border-radius:10px;overflow:hidden;margin:20px auto 0}.loadbar span{display:block;height:100%;width:0;background:#3a9a7d;transition:width .3s}.desktop-only{display:initial}@keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:940px){.game-grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.insights{grid-template-columns:1fr}.scenario{align-items:flex-start;flex-direction:column}.scenariofacts{min-width:0}.panel{padding:23px}}
+    @media(max-width:600px){.shell{padding:0 15px}.nav{min-height:63px}.smalltag.desktop-only{display:none}.hero{padding:32px 0 10px}h1{font-size:2.8rem}.steps{gap:6px}.step{border-radius:10px;gap:7px;padding:9px;font-size:.74rem;line-height:1.3}.stepnum{width:24px;height:24px}.scenario{padding:22px}.panel{padding:19px;border-radius:15px}.lever{padding:16px 14px}.levername{font-size:.88rem}.metrics{gap:8px}.metric{padding:13px}.metric-number{font-size:1.65rem}.resultlead{padding:19px;align-items:flex-start}.resultcount{min-width:77px}.resultcount strong{font-size:1.3rem}.heading-row{display:block}.bottom-actions .cta,.bottom-actions .textbtn{width:100%}.navchip{font-size:.67rem}.compare{font-size:.75rem}.compare th,.compare td{padding:10px 7px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    @media print{body{background:#fff;color:#000}.topbar,.hero,.steps,.scenario,.game-grid,.foot,.bottom-actions,#roundFeedback,#loading{display:none!important}.shell{max-width:none;padding:0}.feedback{display:block!important}.resultlead,.metric,.insight,.reflection{box-shadow:none;break-inside:avoid}.metricbar{-webkit-print-color-adjust:exact;print-color-adjust:exact}.writearea{border:0;border-bottom:1px solid #777;min-height:65px}#finalFeedback{margin-top:0}.hidden{display:none!important}}
+  
+
+    .mapline{display:flex;align-items:center;gap:12px;margin:14px 0 2px}.wave{display:inline-block;color:#3cb0ad;font-size:1.3rem}.blueprint{background:#e9f5f3;color:#1a706d;border:1px solid #cce9e5;border-radius:12px;padding:13px 15px;font-size:.84rem;line-height:1.5;margin:14px 0}.fishchart{padding:22px 23px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:15px 0}.chartframe{width:100%;height:175px;margin-top:10px}.chartmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.75rem;color:var(--muted)}.chartmeta strong{color:var(--ink)}.questions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.questions .panel{box-shadow:none}.question-label{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#187d77;margin-bottom:8px}.downloadlink{color:#196e79;font-weight:800;text-decoration:underline;text-underline-offset:3px}.bar-over{overflow-x:auto}
+    @media(max-width:680px){.questions{grid-template-columns:1fr}.fishchart{padding:17px}.chartframe{height:150px}.brand{font-size:.78rem;letter-spacing:-.025em;gap:8px}.brandicon{width:32px;height:32px;flex-shrink:0}.navchip{padding:7px 9px}.topright{gap:4px}}
+    @media print{.fishchart,.questions{break-inside:avoid}.chartframe{height:130px}.questions{display:block}.questions .panel{margin-bottom:10px}.bar-over{overflow:visible}}
+
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="nav shell">
+    <div class="brand"><span class="brandicon" aria-hidden="true">🐟</span><span>SAVE THE FISHING TOWN</span></div>
+    <div class="topright"><span class="smalltag desktop-only">Science / Sustainability</span><span class="navchip">YEAR 9 · 2 ROUNDS</span></div>
+  </div></header>
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">The sustainability decision lab</div>
+      <h1>Save the Fishing Town<span style="color:#1d9f91">.</span></h1>
+      <p class="intro">The town needs fish to survive, but people also need jobs and income. Protect the ocean without leaving fishing families behind. Make a plan, discover the consequences, then improve it.</p>
+    </section>
+    <div class="steps" aria-label="Game progress">
+      <div class="step active" id="step1"><span class="stepnum">1</span><span>First plan</span></div>
+      <div class="step" id="step2"><span class="stepnum">2</span><span>Improve your plan</span></div>
+      <div class="step" id="step3"><span class="stepnum">✓</span><span>Final outcome</span></div>
+    </div>
+    <section class="scenario" aria-label="Fishing town scenario">
+      <div><div class="smalltag">Your mission</div><h2>A fictional Australian coastal town faces falling fish populations.</h2><p>Local families rely on fishing, but years of heavy catches have reduced the number of fish in the bay. As the council's sustainability adviser, you must protect marine life, keep livelihoods secure and support a healthy local economy. You get <strong>two rounds</strong> to try.</p></div>
+      <div class="scenariofacts"><span class="fact">🐟 Declining fish stocks</span><span class="fact">⚓ Fishing families</span><span class="fact">🎯 Four targets</span></div>
+    </section>
+    <section class="game-grid" id="gameControls">
+      <div class="panel">
+        <div class="panelhead"><div><h2 id="controlTitle">Set your first plan</h2><p class="sub" id="controlSubtitle">Choose how strongly the town should pursue each priority.</p></div><span class="roundpill" id="roundPill">ROUND 1 OF 2</span></div>
+        <div class="lever" style="--percent:35%">
+          <div class="lever-top"><label class="levername" for="protection"><span class="levericon" aria-hidden="true">🌊</span> Environmental · Marine protection</label><output class="levervalue" id="protectionValue" for="protection">35%</output></div>
+          <p>How much of the fishing area should become a no-take marine reserve to allow fish to recover?</p>
+          <input id="protection" aria-label="Percentage of fishing grounds protected" type="range" min="0" max="100" step="5" value="35"><div class="endpoints"><span>0% · No reserve</span><span>100% · All waters protected</span></div>
+        </div>
+        <div class="lever social" style="--percent:40%">
+          <div class="lever-top"><label class="levername" for="support"><span class="levericon" aria-hidden="true">♡</span> Social · Community support</label><output class="levervalue" id="supportValue" for="support">40%</output></div>
+          <p>How much effort and funding should help fishing families retrain, diversify and find other work?</p>
+          <input id="support" aria-label="Community support effort" type="range" min="0" max="100" step="5" value="40"><div class="endpoints"><span>0% · No extra support</span><span>100% · Maximum support</span></div>
+        </div>
+        <div class="lever economy" style="--percent:65%">
+          <div class="lever-top"><label class="levername" for="fishing"><span class="levericon" aria-hidden="true">⚓</span> Economic · Fishing intensity</label><output class="levervalue" id="fishingValue" for="fishing">65%</output></div>
+          <p>How much commercial fishing activity should be permitted in waters that remain open?</p>
+          <input id="fishing" aria-label="Permitted commercial fishing intensity" type="range" min="0" max="100" step="5" value="65"><div class="endpoints"><span>0% · No fishing</span><span>100% · High fishing effort</span></div>
+        </div>
+        <p class="underlever"><strong>Important:</strong> Marine protection is the share of waters closed to fishing. Support and fishing intensity are levels of policy effort; they do <em>not</em> add up to 100%. Protecting all waters means no catch, regardless of the fishing intensity setting.</p>
+      </div>
+      <aside class="panel" aria-label="Town targets">
+        <div class="brief-header"><h2 style="margin-bottom:8px">Town success targets</h2><span aria-hidden="true">🎯</span></div>
+        <p class="goalnote">Your goal is to achieve all four outcomes after five fictional years. A choice can help one group while creating challenges elsewhere.</p>
+        <div class="target"><div><div class="targetname">🐠 Recover fish populations</div><div class="targetdesc">Environmental outcome</div></div><div><div class="threshold">65/100+</div><div class="targetkey">fish stock index</div></div></div>
+        <div class="target"><div><div class="targetname">🧑‍🤝‍🧑 Protect local livelihoods</div><div class="targetdesc">Jobs and family wellbeing</div></div><div><div class="threshold">72/100+</div><div class="targetkey">livelihood index</div></div></div>
+        <div class="target"><div><div class="targetname">💼 Support the local economy</div><div class="targetdesc">Businesses and income</div></div><div><div class="threshold">70/100+</div><div class="targetkey">economic index</div></div></div>
+        <div class="target"><div><div class="targetname">🎣 Maintain a future fishery</div><div class="targetdesc">Is a useful catch possible in Year 5?</div></div><div><div class="threshold">53/100+</div><div class="targetkey">future catch index</div></div></div>
+        <div class="notice"><span class="notice-icon" aria-hidden="true">ⓘ</span><span>This is a <strong>fictional classroom model</strong>, not an ecological or economic forecast. Every round tests a five-year plan from the <strong>same starting conditions</strong>.</span></div>
+        <button class="cta" id="runBtn" type="button">Run Round 1 simulation <span aria-hidden="true">→</span></button>
+        <p class="tiny">Outcomes are revealed after you run your plan.</p>
+      </aside>
+    </section>
+    <section class="feedback hidden" id="roundFeedback" aria-live="polite"></section>
+    <section class="feedback hidden" id="finalFeedback" aria-live="polite"></section>
+    <footer class="foot"><div class="footer-line"><span>SAVE THE FISHING TOWN · Year 9 Sustainability</span><span>No login, tracking or student accounts. Can run offline.</span></div>
+      <details><summary>How does the classroom model work?</summary>
+        <p>Each plan starts with a fictional fish population index of <strong>42/100</strong>. The model projects five years. Protected waters reduce the area available to fishing, supporting fish recovery but reducing fishing access. Fishing intensity increases fishing activity in open waters and can support current jobs and income, but excessive fishing pressure reduces fish stocks. Community support helps families move into new jobs and diversifies the economy, but has a short-term cost.</p>
+        <p>The four output scores are <em>invented educational indices</em>, not measured fish numbers, employment rates, dollar amounts, or predictions. The model is deliberately deterministic: identical choices produce identical results. The threshold values are learning targets, not real management standards. Actual fisheries depend on species, reproduction, habitat, climate, illegal fishing, regulation, tourism, markets and much more. Marine reserves can help fisheries in some circumstances, but outcomes vary; neither fishing bans nor greater catches are guaranteed to achieve the modelled benefits.</p>
+      </details>
+      <p><a class="downloadlink" href="student-worksheet.html">Open the companion student worksheet</a> (when hosted alongside this game).</p>
+    </footer>
+  </main>
+  <div id="loading" class="loadingmask hidden" role="status" aria-live="assertive" aria-label="Simulating the fishing town sustainability strategy">
+    <div class="loadbox"><div class="spinner" aria-hidden="true"></div><h2>Thinking through the outcomes…</h2><p id="loadingLine">Estimating changes in marine life…</p><div class="loadbar"><span id="loadbar"></span></div></div>
+  </div>
+  <script>
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const keys=['protection','support','fishing'];
+  const targets={fish:65,jobs:72,economy:70,catch:53};
+  const metrics=[
+    {key:'fish',title:'Fish population',unit:'/100',target:'at least 65/100'},
+    {key:'jobs',title:'Local livelihoods',unit:'/100',target:'at least 72/100'},
+    {key:'economy',title:'Town economy',unit:'/100',target:'at least 70/100'},
+    {key:'catch',title:'Future fishing catch',unit:'/100',target:'at least 53/100'}
+  ];
+  let round=1,first=null,second=null,simulating=false;
+  const clamp=(v,a=0,b=100)=>Math.max(a,Math.min(b,v));
+  const readChoices=()=>Object.fromEntries(keys.map(k=>[k,Number($(k).value)]));
+  function paintSlider(k){const el=$(k);$(k+'Value').textContent=el.value+'%';el.parentElement.style.setProperty('--percent',el.value+'%');}
+  function setChoices(c){keys.forEach(k=>{$(k).value=c[k];paintSlider(k);});}
+  keys.forEach(k=>{$(k).addEventListener('input',()=>paintSlider(k));paintSlider(k);});
+
+  // Deliberately simplified teaching model, not calibrated to a real fishery.
+  // Each round is an alternative five-year policy from the same initial stock.
+  function score(c){
+    const p=c.protection,s=c.support,f=c.fishing;
+    const openWaterFishing=f*(1-p/100); // a completely closed area cannot be fished
+    let stock=42;
+    const history=[42];
+    for(let year=1;year<=5;year++){
+      const naturalRecovery=(10+.1*p)*(1-stock/115);
+      const fishingImpact=.19*openWaterFishing;
+      stock=clamp(stock+naturalRecovery-fishingImpact,5,100);
+      history.push(Math.round(stock));
+    }
+    const scores={
+      fish:Math.round(stock),
+      jobs:Math.round(clamp(48+.38*openWaterFishing+.35*s+.15*(stock-42)-.12*p*(1-s/100)-.24*Math.max(0,50-stock))),
+      economy:Math.round(clamp(55+.48*openWaterFishing+.54*(stock-42)-.15*s+.15*p*(s/100)-.32*Math.max(0,50-stock))),
+      catch:Math.round(clamp(30+.70*openWaterFishing+.42*(stock-42)*Math.min(1,openWaterFishing/15)-1.2*Math.max(0,50-stock)))
+    };
+    const hits=metrics.filter(m=>scores[m.key]>=targets[m.key]).length;
+    return {choices:{...c},history,scores,hits,success:hits===4,openWaterFishing};
+  }
+  function setProgress(stage){['step1','step2','step3'].forEach((id,i)=>{const el=$(id);el.classList.remove('active','done');if(i<stage)el.classList.add('done');if(i===stage)el.classList.add('active');});}
+  const displayValue=(m,v)=>v+'/100';
+  function metricHtml(result){return metrics.map(m=>{const v=result.scores[m.key],pass=v>=targets[m.key];return `<article class="metric"><div class="metric-label">${m.title}</div><div class="metric-number">${displayValue(m,v)}</div><div class="metric-status ${pass?'passed':'missed'}">${pass?'✓ Target met':'! Below target'}</div><div class="metricbar" aria-hidden="true"><span class="${pass?'':'fail'}" style="width:${v}%"></span></div></article>`;}).join('');}
+  function stockChart(one,two){
+    const makeLine=(history)=>history.map((value,i)=>`${48+i*102},${140-value*1.15}`).join(' ');
+    const dots=history=>history.map((v,i)=>`<circle cx="${48+i*102}" cy="${140-v*1.15}" r="4" fill="currentColor"/>`).join('');
+    const axes=[25,50,75,100].map(v=>`<line x1="38" x2="567" y1="${140-v*1.15}" y2="${140-v*1.15}" stroke="#e4ebed"/><text x="7" y="${144-v*1.15}" fill="#637c84" font-size="10">${v}</text>`).join('');
+    const years=[0,1,2,3,4,5].map(v=>`<text x="${48+v*102}" y="157" text-anchor="middle" font-size="11" fill="#637c84">${v}</text>`).join('');
+    return `<section class="fishchart"><h3>Fish population over five fictional years</h3><p class="sub">Both plans start with the same fish population index of 42/100. This chart compares <strong>alternative futures</strong>, not ten consecutive years.</p><svg class="chartframe" viewBox="0 0 590 169" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Line chart comparing fish populations after five years: Round 1 ends at ${one.scores.fish} out of 100${two?`, Round 2 ends at ${two.scores.fish} out of 100`:''}."><g>${axes}${years}</g><g color="#178c86"><polyline points="${makeLine(one.history)}" stroke="currentColor" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>${dots(one.history)}</g>${two?`<g color="#d08b43"><polyline points="${makeLine(two.history)}" stroke="currentColor" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>${dots(two.history)}</g>`:''}</svg><div class="chartmeta"><span>● <strong>Round 1:</strong> ${one.scores.fish}/100 (Year 5)</span>${two?`<span style="color:#ae713b">● <strong>Round 2:</strong> ${two.scores.fish}/100 (Year 5)</span>`:''}<span>Year 0 → Year 5</span></div></section>`;
+  }
+  function insights(result){
+    const c=result.choices,s=result.scores;
+    const ecosystem=s.fish>=65
+      ? `After five fictional years, the fish population reaches ${s.fish}/100. Marine protection and limits on fishing pressure help more fish survive and reproduce.`
+      : `The fish population reaches ${s.fish}/100, below the recovery target. Fish may need less pressure from fishing or more habitat protection.`;
+    const society=s.jobs>=72
+      ? `Local livelihoods reach ${s.jobs}/100. Fishing activity can support jobs, while retraining and other work help families adapt to changes.`
+      : `Local livelihoods are at ${s.jobs}/100. Families may need more job pathways or a slower transition away from fishing in protected waters.`;
+    const economy=s.economy>=70
+      ? `Town economic health is ${s.economy}/100. Fishing income and alternative activities help balance the cost of transition support.`
+      : `Town economic health is ${s.economy}/100. Too little fishing income or high transition costs may strain businesses and the local budget.`;
+    const future=s.catch<53 ? 'However, the projected future catch is below target.' : 'The projected future catch also meets its target.';
+    return `<div class="insights"><article class="insight"><div class="insight-label env">01 · Environmental</div><h3>Fish and habitats</h3><p>${ecosystem}</p></article><article class="insight"><div class="insight-label soc">02 · Social</div><h3>Families and work</h3><p>${society}</p></article><article class="insight"><div class="insight-label eco">03 · Economic</div><h3>Income now and later</h3><p>${economy} ${future}</p></article></div>`;
+  }
+  function summary(result){const s=result.scores;
+    if(result.success)return ['A balanced coastal future!','You met all four targets in this fictional model. Your plan combines recovering fish populations with secure livelihoods and an economically useful fishery.'];
+    if(s.fish<targets.fish)return ['The fish need more time to recover.','Jobs and catches may look strong today, but the fish stock is below the recovery target. Consider reducing fishing pressure or increasing protection.'];
+    if(s.jobs<targets.jobs)return ['Marine recovery, but families need support.','Your environmental goals may be on track, but too many people could struggle to make a living. Think about retraining and alternative jobs.'];
+    if(s.economy<targets.economy)return ['The transition needs a stronger economy.','You may protect nature and support families, but the fictional town still needs sufficient income to maintain services and businesses.'];
+    return ['Fish are recovering, but future catch is limited.','Your plan meets several targets, yet the local fishery may be too small or depleted to provide a useful catch in Year 5.'];
+  }
+  function chooseMessage(one,two){
+    const labels={protection:'marine protection',support:'community support',fishing:'fishing intensity'};
+    const changes=keys.map(k=>({key:k,change:two.choices[k]-one.choices[k]})).filter(x=>x.change!==0);
+    if(!changes.length)return 'You used the same policy in both rounds. The model produced the same outcomes, because it has no random events. Try another combination to discover a trade-off.';
+    const changeText=changes.map(x=>`${x.change>0?'increased':'decreased'} ${labels[x.key]} by ${Math.abs(x.change)} percentage points`).join('; ');
+    const gained=metrics.filter(m=>one.scores[m.key]<targets[m.key]&&two.scores[m.key]>=targets[m.key]).map(m=>m.title.toLowerCase());
+    const lost=metrics.filter(m=>one.scores[m.key]>=targets[m.key]&&two.scores[m.key]<targets[m.key]).map(m=>m.title.toLowerCase());
+    let note='';if(gained.length)note+=` You newly reached the target for ${gained.join(' and ')}.`;
+    if(lost.length)note+=` However, you fell below the target for ${lost.join(' and ')}.`;
+    if(!gained.length&&!lost.length)note+=' The individual scores may have changed even if the target statuses stayed the same.';
+    return `In Round 2, you ${changeText}.${note}`;
+  }
+  function choicesTable(one,two){
+    return `<div class="bar-over"><table class="compare"><thead><tr><th>Lever setting</th><th>Round 1</th><th>Round 2</th></tr></thead><tbody>
+      <tr><td>Marine protection</td><td>${one.choices.protection}%</td><td>${two.choices.protection}%</td></tr>
+      <tr><td>Community support</td><td>${one.choices.support}%</td><td>${two.choices.support}%</td></tr>
+      <tr><td>Fishing intensity</td><td>${one.choices.fishing}%</td><td>${two.choices.fishing}%</td></tr></tbody></table></div>`;
+  }
+  function compareTable(one,two){return `<div class="bar-over"><table class="compare"><thead><tr><th>Indicator</th><th>Round 1</th><th>Round 2</th><th>Change</th></tr></thead><tbody>${metrics.map(m=>{const a=one.scores[m.key],b=two.scores[m.key],d=b-a;return `<tr><td>${m.title}</td><td>${displayValue(m,a)}</td><td><strong>${displayValue(m,b)}</strong></td><td class="${d>0?'delta-up':d<0?'delta-down':'delta-even'}">${d>0?'+':''}${d} pts</td></tr>`;}).join('')}</tbody></table></div>`;}
+  function roundHtml(result){const [head,desc]=summary(result);
+    return `<div class="heading-row"><div><div class="eyebrow card-eyebrow">Round 1 · Your first outcome</div><h2 style="margin:7px 0 3px">Five years after your plan…</h2><p>Study the outcomes before designing your second and final approach.</p></div></div>
+      <div class="resultlead"><div><div class="smalltag">First assessment</div><h2>${head}</h2><p>${desc}</p></div><div class="resultcount"><strong>${result.hits}/4</strong><span>TARGETS MET</span></div></div>
+      <div class="metrics">${metricHtml(result)}</div>${stockChart(result,null)}${insights(result)}
+      <div class="reflection"><h3>Pause and think</h3><p>Which outcome is furthest from its target? Before changing the levers, predict how your new choice could help <em>one</em> pillar while affecting another.</p><button type="button" class="cta" id="nextRound">Improve your strategy for Round 2 <span aria-hidden="true">→</span></button></div>`;
+  }
+  function finalHtml(one,two){const [head,desc]=summary(two),difference=two.hits-one.hits;
+    const status=two.success?'Mission achieved':difference>0?'Improvement made':difference<0?'More targets missed':'Trade-offs revealed';
+    return `<div class="heading-row"><div><div class="eyebrow card-eyebrow">Final report · Two rounds completed</div><h2 style="margin:7px 0 3px">Your sustainability outcome</h2><p>Compare two possible five-year futures from the same starting conditions.</p></div></div>
+      <div class="resultlead"><div><div class="smalltag">${status}</div><h2>${head}</h2><p>${desc}</p></div><div class="resultcount"><strong>${two.hits}/4</strong><span>TARGETS MET</span></div></div>
+      <div class="metrics">${metricHtml(two)}</div>${stockChart(one,two)}
+      <div class="panel" style="margin:18px 0"><h2>What changed?</h2><p class="sub" style="margin-bottom:14px">${chooseMessage(one,two)}</p>${compareTable(one,two)}</div>
+      ${insights(two)}
+      <div class="panel" style="margin:16px 0"><h2>Your decisions</h2><p class="sub" style="margin-bottom:14px">Your two sets of lever settings</p>${choicesTable(one,two)}</div>
+      <div class="questions"><div class="panel"><div class="question-label">Think · Trade-off</div><h3>What improved—and what was the cost?</h3><p class="sub">Identify one decision that benefited a pillar but created a disadvantage for another. Support your answer with two results.</p></div><div class="panel"><div class="question-label">Think · Interdependence</div><h3>Why isn't protecting every fishing area enough?</h3><p class="sub">Explain why the environmental, social and economic pillars must be considered together.</p></div></div>
+      <div class="reflection"><h3>Think like a sustainability scientist</h3><p>Which of your two plans would you recommend to the town? Refer to the three pillars and at least two pieces of numerical evidence from the model.</p>
+        <label class="label" for="studentReflection">My explanation (optional)</label><textarea class="writearea" id="studentReflection" placeholder="I recommend Round ___ because… One trade-off was…"></textarea>
+        <p class="tiny" style="text-align:left">Your explanation stays in this browser tab. Print or save the report before leaving the page.</p></div>
+      <div class="bottom-actions"><button type="button" class="cta" id="printBtn">Print / save as PDF ↗</button><button type="button" class="textbtn" id="restartBtn">↻ Play again</button></div>`;
+  }
+  const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+  async function simulate(){
+    if(simulating||round>2)return;
+    simulating=true;const choices=readChoices();$('runBtn').disabled=true;
+    $('loading').classList.remove('hidden');
+    const phases=['Checking fishing pressure and protected areas…','Estimating five years of fish recovery…','Considering jobs, family wellbeing and town income…','Balancing all three sustainability pillars…'];
+    for(let i=0;i<phases.length;i++){$('loadingLine').textContent=phases[i];$('loadbar').style.width=Math.round((i+1)/phases.length*100)+'%';await delay(360);}
+    const result=score(choices);$('loading').classList.add('hidden');
+    if(round===1){
+      first=result;$('gameControls').classList.add('hidden');$('roundFeedback').innerHTML=roundHtml(result);$('roundFeedback').classList.remove('hidden');
+      $('nextRound').addEventListener('click',startRoundTwo);$('roundFeedback').scrollIntoView({behavior:'smooth',block:'start'});
+    }else{
+      second=result;$('gameControls').classList.add('hidden');$('roundFeedback').classList.add('hidden');
+      $('finalFeedback').innerHTML=finalHtml(first,second);$('finalFeedback').classList.remove('hidden');
+      $('printBtn').addEventListener('click',()=>window.print());$('restartBtn').addEventListener('click',restart);
+      setProgress(2);$('finalFeedback').scrollIntoView({behavior:'smooth',block:'start'});round=3;
+    }
+    simulating=false;$('runBtn').disabled=false;
+  }
+  function startRoundTwo(){round=2;setProgress(1);$('roundFeedback').classList.add('hidden');$('gameControls').classList.remove('hidden');
+    $('controlTitle').textContent='Improve your plan';$('controlSubtitle').textContent='Your first settings are still here. Change one or more levers, then test the alternative future.';
+    $('roundPill').textContent='ROUND 2 OF 2';$('runBtn').innerHTML='Run final simulation <span aria-hidden="true">→</span>';setChoices(first.choices);
+    $('gameControls').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function restart(){round=1;first=null;second=null;simulating=false;setProgress(0);$('controlTitle').textContent='Set your first plan';
+    $('controlSubtitle').textContent='Choose how strongly the town should pursue each priority.';$('roundPill').textContent='ROUND 1 OF 2';
+    $('runBtn').innerHTML='Run Round 1 simulation <span aria-hidden="true">→</span>';$('runBtn').disabled=false;setChoices({protection:35,support:40,fishing:65});
+    $('roundFeedback').classList.add('hidden');$('finalFeedback').classList.add('hidden');$('roundFeedback').innerHTML='';$('finalFeedback').innerHTML='';
+    $('gameControls').classList.remove('hidden');$('loadbar').style.width='0%';window.scrollTo({top:0,behavior:'smooth'});
+  }
+  $('runBtn').addEventListener('click',simulate);
+  </script>
+</body>
+</html>
